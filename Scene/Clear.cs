@@ -13,7 +13,7 @@ namespace Word.Scene
             var layer = new asd.Layer2D();
 
             var background = new asd.TextureObject2D();
-            background.Texture = asd.Engine.Graphics.CreateTexture2D("clear.png");
+            background.Texture = asd.Engine.Graphics.CreateTexture2D("Resource/clear.png");
             layer.AddObject(background);
 
             AddLayer(layer);

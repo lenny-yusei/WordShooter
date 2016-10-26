@@ -11,19 +11,17 @@ namespace Word.Charactor
         public Enemy(asd.Layer2D layer, char wordtype)
         {
             Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_Z.png");
-            Scale = new asd.Vector2DF(Size.X / Texture.Size.X, Size.Y / Texture.Size.Y);
+            Scale = new asd.Vector2DF(Size.X / Texture.Size.X /2, Size.Y / Texture.Size.Y /2);
             CenterPosition = Texture.Size.To2DF() / 2;
-            Position = new asd.Vector2DF(targetPosition.X, -Size.Y);
+            Position = new asd.Vector2DF(targetPositionA.X, -Size.Y);
 
             gameLayer = layer;
-            this.type = wordtype;
+            this.wordtype = wordtype;
         }
 
         protected override void OnUpdate()
         {
-            var position = Position;
-            position.Y = position.Y * 0.99f + targetPosition.Y * 0.01f;
-            Position = position;
+            Move(targetPositionA);
 
             if (count%5 == 0)
             {
@@ -37,12 +35,12 @@ namespace Word.Charactor
                     if ((count / 30) % 2 == 0)
                     {
                         angle += 90;
-                        bulletPos.X += 64.0f;
+                        bulletPos.X += 0.0f;
                     }
                     else
                     {
                         angle -= 90;
-                        bulletPos.X -= 64.0f;
+                        bulletPos.X -= 0.0f;
                     }
 
                     gameLayer.AddObject(new Bullet(bulletPos, (float)angle));
@@ -60,7 +58,7 @@ namespace Word.Charactor
         public void damage(Charactor.Shot shot)
         {
            
-            if (shot.shottype == this.type)
+            if (shot.shottype == this.wordtype)
                 hp = 0; 
             else
                 hp--;
@@ -69,10 +67,17 @@ namespace Word.Charactor
             if (hp <= 0)
                 Dispose();
         }
-        public char type;
+
+        public void Move(asd.Vector2DF target)//Moveを色々作る
+        {
+            var position = Position;
+            position.Y = position.Y * 0.99f + target.Y * 0.01f;
+            Position = position;
+        }
+        public char wordtype;
 
         private asd.Vector2DF Size = new asd.Vector2DF(128.0f, 128.0f);
-        private readonly asd.Vector2DF targetPosition = new asd.Vector2DF(320, 120);
+        private readonly asd.Vector2DF targetPositionA = new asd.Vector2DF(240, 120);
         private asd.Layer2D gameLayer;
 
         private int count = 0;

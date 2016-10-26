@@ -10,8 +10,8 @@ namespace Word.Charactor
     {
         public Player(asd.Layer2D layer)
         {
-            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/爺！.png");
-            Scale = new asd.Vector2DF(Size.X / Texture.Size.X, Size.Y / Texture.Size.Y);
+            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/myship.png");
+            Scale = new asd.Vector2DF(2, 2);
             CenterPosition = Texture.Size.To2DF() / 2;
             Position = Resource.Window.Size.To2DF() / 2;
 
@@ -39,7 +39,7 @@ namespace Word.Charactor
 
         public bool IsHit(Bullet bullet)
         {
-            return (bullet.Position - Position).Length < 16;
+            return (bullet.Position - Position).Length < 4;
         }
         public void damage()
         {
@@ -49,7 +49,7 @@ namespace Word.Charactor
         }
 
         private asd.Vector2DF Size { get; } = new asd.Vector2DF(64.0f, 128.0f);
-        private const float speed = 6;
+        private const float speed = 5;
         private int hp = 3;
 
         private asd.Layer2D gameLayer;
