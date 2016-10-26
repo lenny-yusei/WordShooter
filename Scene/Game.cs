@@ -12,15 +12,14 @@ namespace Word.Scene
         {
             var backgroundLayer = new asd.Layer2D();
             var background = new asd.TextureObject2D();
-            background.Texture = asd.Engine.Graphics.CreateTexture2D("game.png");
+            background.Texture = asd.Engine.Graphics.CreateTexture2D("Resource/background.png");
             backgroundLayer.AddObject(background);
             AddLayer(backgroundLayer);
 
             player = new Charactor.Player(gameLayer);
             gameLayer.AddObject(player);
 
-            enemy = new Charactor.Enemy(gameLayer, Charactor.WordType.Type.Z);
-            enemy.type = Charactor.WordType.Type.Z;
+            enemy = new Charactor.Enemy(gameLayer, 'Z');
             gameLayer.AddObject(enemy);
 
             AddLayer(gameLayer);

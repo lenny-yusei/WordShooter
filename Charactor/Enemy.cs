@@ -8,16 +8,15 @@ namespace Word.Charactor
 {
     sealed class Enemy : asd.TextureObject2D
     {
-        public Enemy(asd.Layer2D layer, WordType.Type type)
+        public Enemy(asd.Layer2D layer, char wordtype)
         {
-            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/爺.bmp");
+            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_Z.png");
             Scale = new asd.Vector2DF(Size.X / Texture.Size.X, Size.Y / Texture.Size.Y);
             CenterPosition = Texture.Size.To2DF() / 2;
             Position = new asd.Vector2DF(targetPosition.X, -Size.Y);
 
             gameLayer = layer;
-            type = this.type;
-            this.typeA = 'Z';
+            this.type = wordtype;
         }
 
         protected override void OnUpdate()
@@ -46,7 +45,7 @@ namespace Word.Charactor
                         bulletPos.X -= 64.0f;
                     }
 
-                    gameLayer.AddObject(new Charactor.Bullet(bulletPos, (float)angle));
+                    gameLayer.AddObject(new Bullet(bulletPos, (float)angle));
                 }
             }
             
@@ -61,19 +60,18 @@ namespace Word.Charactor
         public void damage(Charactor.Shot shot)
         {
            
-            if (shot.typeA == this.typeA)
+            if (shot.shottype == this.type)
                 hp = 0; 
             else
                 hp--;
             if (hp < 4)
-                Texture = asd.Engine.Graphics.CreateTexture2D("tree_character_yowaru.png");
+                Texture = asd.Engine.Graphics.CreateTexture2D("Resource/自機.png");
             if (hp <= 0)
                 Dispose();
         }
-        public Charactor.WordType.Type type;
-        public char typeA;
+        public char type;
 
-        private asd.Vector2DF Size { get; } = new asd.Vector2DF(128.0f, 128.0f);
+        private asd.Vector2DF Size = new asd.Vector2DF(128.0f, 128.0f);
         private readonly asd.Vector2DF targetPosition = new asd.Vector2DF(320, 120);
         private asd.Layer2D gameLayer;
 
