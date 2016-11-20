@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Word.Charactor
+namespace WordShooter.Charactor
 {
     sealed class Enemy : asd.TextureObject2D
     {
-        public Enemy(asd.Layer2D layer, char wordtype)
+        public Enemy(asd.Layer2D layer, char wordtype, asd.Vector2DF pos)
         {
-            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_Z.png");
+            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_" + wordtype + ".png");
             Scale = new asd.Vector2DF(Size.X / Texture.Size.X /2, Size.Y / Texture.Size.Y /2);
             CenterPosition = Texture.Size.To2DF() / 2;
-            Position = new asd.Vector2DF(targetPositionA.X, -Size.Y);
-
+            Position = new asd.Vector2DF(pos.X, -pos.Y);
+   
             gameLayer = layer;
             this.wordtype = wordtype;
         }
@@ -22,31 +22,10 @@ namespace Word.Charactor
         protected override void OnUpdate()
         {
             Move(targetPositionA);
-
-            if (count%5 == 0)
-            {
-                for (int i=0; i<12; i++)
-                {
-                    var angle = 2 * Math.PI * (i / 12.0f);
-                    var bulletPos = Position + 36.0f * new asd.Vector2DF((float)Math.Cos(angle), (float)Math.Sin(angle));
-
-                    angle *= 360.0f / (2 * Math.PI); // rad to degree
-
-                    if ((count / 30) % 2 == 0)
-                    {
-                        angle += 90;
-                        bulletPos.X += 0.0f;
-                    }
-                    else
-                    {
-                        angle -= 90;
-                        bulletPos.X -= 0.0f;
-                    }
-
-                    gameLayer.AddObject(new Bullet(bulletPos, (float)angle));
-                }
-            }
             
+            EnemyShot.ShotTypeB(count, Position, gameLayer);
+
+            CollisionEnemyAndShot();
             count = (count + 1) % 1200;
         }
 
@@ -58,12 +37,12 @@ namespace Word.Charactor
         public void damage(Charactor.Shot shot)
         {
            
-            if (shot.shottype == this.wordtype)
+            if (shot.shotType == this.wordtype)
                 hp = 0; 
             else
                 hp--;
             if (hp < 4)
-                Texture = asd.Engine.Graphics.CreateTexture2D("Resource/自機.png");
+                Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_" + wordtype + ".png");
             if (hp <= 0)
                 Dispose();
         }
@@ -74,10 +53,28 @@ namespace Word.Charactor
             position.Y = position.Y * 0.99f + target.Y * 0.01f;
             Position = position;
         }
+        
+        private void CollisionEnemyAndShot()
+        {
+            gameLayer.Objects.ToList().RemoveAll(o =>
+            {
+                if (!(o is Charactor.Shot))
+                    return false;
+                if (!(this.IsHit(o as Charactor.Shot)))
+                    return false;
+
+                o.Dispose();
+                this.damage(o as Charactor.Shot);
+                
+                return true;
+            });
+        }
+
         public char wordtype;
 
         private asd.Vector2DF Size = new asd.Vector2DF(128.0f, 128.0f);
         private readonly asd.Vector2DF targetPositionA = new asd.Vector2DF(240, 120);
+        private readonly asd.Vector2DF targetPositionB = new asd.Vector2DF(480, 120);
         private asd.Layer2D gameLayer;
 
         private int count = 0;

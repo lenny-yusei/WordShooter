@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Word.Charactor
+namespace WordShooter.Charactor
 {
     sealed class Bullet : asd.TextureObject2D
     {
@@ -25,9 +25,11 @@ namespace Word.Charactor
 
             if (Position.Y > Resource.Window.Size.Y)
                 Dispose();
+            count = (count + 1) % 1200;
         }
 
-        private const float speed = 6.0f;
+        private const float speed = 3.0f;
         private asd.Vector2DF Size { get; } = new asd.Vector2DF(16.0f, 32.0f);
+        private int count = 0;
     }
 }

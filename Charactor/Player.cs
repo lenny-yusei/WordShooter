@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Word.Charactor
+namespace WordShooter.Charactor
 {
     sealed class Player : asd.TextureObject2D
     {
@@ -31,10 +31,7 @@ namespace Word.Charactor
                 position.X += speed;
             this.Position = position;
 
-            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Z) == asd.KeyState.Push)
-                gameLayer.AddObject(new Charactor.Shot(Position, 'Z'));
-            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.X) == asd.KeyState.Push)
-                gameLayer.AddObject(new Charactor.Shot(Position, 'X'));
+            pushedKey();
         }
 
         public bool IsHit(Bullet bullet)
@@ -46,6 +43,25 @@ namespace Word.Charactor
             hp--;
             if (hp < 0)
                 Dispose();
+        }
+        void pushedKey()
+        {
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.A) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'A'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.B) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'B'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.C) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'C'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.D) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'D'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.E) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'E'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.F) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'F'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Z) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'Z'));
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.X) == asd.KeyState.Push)
+                gameLayer.AddObject(new Charactor.Shot(Position, 'X'));
         }
 
         private asd.Vector2DF Size { get; } = new asd.Vector2DF(64.0f, 128.0f);

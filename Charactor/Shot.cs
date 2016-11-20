@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Word.Charactor
+namespace WordShooter.Charactor
 {
     sealed class Shot : asd.TextureObject2D
     {
@@ -14,7 +14,7 @@ namespace Word.Charactor
             Scale = new asd.Vector2DF(Size.X / Texture.Size.X, Size.Y / Texture.Size.Y);
             CenterPosition = Texture.Size.To2DF() / 2;
             Position = pos;
-            this.shottype = wordtype;
+            this.shotType = wordtype;
         }
 
         protected override void OnUpdate()
@@ -24,7 +24,7 @@ namespace Word.Charactor
                 Dispose();
         }
 
-        public char shottype;
+        public char shotType;
         private asd.Vector2DF Size { get; } = new asd.Vector2DF(16.0f, 32.0f);
         private const float speed = 6;
     }

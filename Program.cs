@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Word
+namespace WordShooter
 {
     class Program
     {
@@ -17,7 +17,7 @@ namespace Word
                 Resource.Window.Size.X, Resource.Window.Size.Y,
                 new asd.EngineOption());
 
-            asd.Engine.File.AddRootPackageWithPassword("Resource.pack", "amcr");
+           // asd.Engine.File.AddRootPackageWithPassword("Resource.pack", "amcr");
             asd.Engine.ChangeScene(new Scene.Title());
             while (asd.Engine.DoEvents())
             {
