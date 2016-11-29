@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordShooter.Scene
 {
-    sealed class Game : asd.Scene
+    class Game : asd.Scene
     {
         public Game()
         {
@@ -21,30 +21,18 @@ namespace WordShooter.Scene
             asd.Vector2DF pos1 = new asd.Vector2DF(280f , 30f);
             asd.Vector2DF pos2 = new asd.Vector2DF(480f, 0f);
 
-            Random r = new Random();
-            int i = r.Next(words.Length);
-            char c = words[i];
-
-            System.Console.WriteLine(c);
-            enemy1 = new Charactor.Enemy(gameLayer, 'Z', pos1);
-            gameLayer.AddObject(enemy1);
-            enemy2 = new Charactor.Enemy(gameLayer, 'X', pos2);
-            gameLayer.AddObject(enemy2);
+            char c = getRandomChar();
 
             AddLayer(gameLayer);
         }
 
         protected override void OnUpdated()
         {
-            if (!enemy1.IsAlive && !enemy2.IsAlive)
-                asd.Engine.ChangeScene(new Scene.Clear());
-            if (!player.IsAlive)
-                asd.Engine.ChangeScene(new Scene.GameOver());
-            CollisionPlayerAndBullet();
-            //CollisionEnemyAndShot();
+            
+            //CollisionPlayerAndBullet();
         }
 
-        private void CollisionPlayerAndBullet()
+        protected void CollisionPlayerAndBullet()
         {
             Func<bool> isHit = () =>
             {
@@ -69,28 +57,18 @@ namespace WordShooter.Scene
                     return true;
                 });
             }
-
         }
 
-       /* private void CollisionEnemyAndShot()
+        protected char getRandomChar()
         {
-            gameLayer.Objects.ToList().RemoveAll(o =>
-            {
-                if (!(o is Charactor.Shot))
-                    return false;
-                if (!(enemy1.IsHit(o as Charactor.Shot)) && !(enemy2.IsHit(o as Charactor.Shot)))
-                   return false; 
-                
-                o.Dispose();
-                enemy1.damage(o as Charactor.Shot);
-                enemy2.damage(o as Charactor.Shot);
-                return true;
-            }); 
-        }*/
-        private Charactor.Player player;
-        private Charactor.Enemy enemy1;
-        private Charactor.Enemy enemy2;
-        private asd.Layer2D gameLayer = new asd.Layer2D();
-        private readonly string words = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Random r = new Random();
+            int i = r.Next(words.Length);
+            char c = words[i];
+            return c;
+        }
+
+        protected Charactor.Player player;
+        protected asd.Layer2D gameLayer = new asd.Layer2D();
+        protected readonly string words = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
 }

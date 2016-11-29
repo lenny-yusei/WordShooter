@@ -22,7 +22,7 @@ namespace WordShooter.Scene
         protected override void OnUpdated()
         {
             if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Z) == asd.KeyState.Push)
-                asd.Engine.ChangeScene(new Scene.Game());
+                asd.Engine.ChangeScene(new Scene.Wave1());
         }
     }
 }

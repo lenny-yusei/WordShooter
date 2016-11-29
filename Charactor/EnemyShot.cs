@@ -9,13 +9,16 @@ namespace WordShooter.Charactor
 {
     public class EnemyShot : asd.TextureObject2D
     {
-        /*
-        public EnemyShot(int type, int count, asd.Layer2D layer)
+        public Type type;
+
+        public EnemyShot(Type type, int count, Vector2DF pos, Layer2D gameLayer)
         {
-            if (type == 1)
-                ShotTypeA(type, count);
+            if (type == Type.t1)
+                ShotTypeA(count, pos, gameLayer);
+            else
+                ShotTypeB(count, pos, gameLayer);
         }
-        */
+        
         public static void ShotTypeA(int count, Vector2DF pos, Layer2D gameLayer)
         {
             if (count % 7 == 0)
@@ -40,7 +43,7 @@ namespace WordShooter.Charactor
                     else { }
                     gameLayer.AddObject(new Bullet(bulletPos, (float)angle));
                 }
-            }    
+            }
         }
         public static void ShotTypeB(int count, Vector2DF pos, Layer2D gameLayer)
         {
@@ -52,7 +55,10 @@ namespace WordShooter.Charactor
                 gameLayer.AddObject(new Bullet(bulletPos, +70));
             }
         }
-        //private asd.Layer2D gamelayer;
-    }
 
+        public enum Type
+        {
+            t1, t2
+        }
+    }
 }

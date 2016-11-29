@@ -8,22 +8,23 @@ namespace WordShooter.Charactor
 {
     sealed class Enemy : asd.TextureObject2D
     {
-        public Enemy(asd.Layer2D layer, char wordtype, asd.Vector2DF pos)
+        public Enemy(asd.Layer2D layer, char wordtype, asd.Vector2DF pos, EnemyShot.Type t)
         {
-            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_" + wordtype + ".png");
+            Texture = asd.Engine.Graphics.CreateTexture2D("Resource/game_enemy/enemy_" + wordtype + ".png");
             Scale = new asd.Vector2DF(Size.X / Texture.Size.X /2, Size.Y / Texture.Size.Y /2);
             CenterPosition = Texture.Size.To2DF() / 2;
             Position = new asd.Vector2DF(pos.X, -pos.Y);
    
             gameLayer = layer;
             this.wordtype = wordtype;
+            typ = t;
         }
 
         protected override void OnUpdate()
         {
             Move(targetPositionA);
             
-            EnemyShot.ShotTypeB(count, Position, gameLayer);
+            EnemyShot.ShotTypeA(count, Position, gameLayer);
 
             CollisionEnemyAndShot();
             count = (count + 1) % 1200;
@@ -36,15 +37,14 @@ namespace WordShooter.Charactor
 
         public void damage(Charactor.Shot shot)
         {
-           
             if (shot.shotType == this.wordtype)
                 hp = 0; 
             else
                 hp--;
             if (hp < 4)
-                Texture = asd.Engine.Graphics.CreateTexture2D("Resource/enemy_" + wordtype + ".png");
+                Texture = asd.Engine.Graphics.CreateTexture2D("Resource/game_enemy/enemy_" + wordtype + ".png");
             if (hp <= 0)
-                Dispose();
+                this.Dispose();
         }
 
         public void Move(asd.Vector2DF target)//Moveを色々作る
@@ -77,6 +77,7 @@ namespace WordShooter.Charactor
         private readonly asd.Vector2DF targetPositionB = new asd.Vector2DF(480, 120);
         private asd.Layer2D gameLayer;
 
+        public EnemyShot.Type typ;
         private int count = 0;
         private int hp = 10;
     }
